@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CinemaService} from '../services/cinema.service';
 
+// noinspection JSArrowFunctionBracesCanBeRemoved
 @Component({
   selector: 'app-cinema',
   templateUrl: './cinema.component.html',
@@ -14,7 +15,7 @@ export class CinemaComponent implements OnInit {
   public currentVille: any;
   public currentCinema: any;
   public salles: any;
-  constructor(private cinemaService:CinemaService) { }
+  constructor(public cinemaService:CinemaService) { }
 
   ngOnInit(): void {
     this.cinemaService.getVilles()
@@ -38,6 +39,14 @@ export class CinemaComponent implements OnInit {
     this.cinemaService.getSalles(c)
       .subscribe(data=>{
         this.salles = data;
+        this.salles._embedded.salles.forEach((salle:any)=>{
+          this.cinemaService.getProjections(salle)
+            .subscribe(data=>{
+              salle.projections = data;
+            },error =>{
+              console.log(error);
+            } )
+        })
       },error =>{
         console.log(error);
       } )

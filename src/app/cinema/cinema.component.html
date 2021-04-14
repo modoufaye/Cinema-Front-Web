@@ -30,25 +30,55 @@
                         <div class="col-md-7">
                           <ul class="list-group">
                             <li class="list-group-item">Séances</li>
+<<<<<<< HEAD
                             <li [ngClass]="p==currentProjection?'active':''" (click)="onGetTicketsPlaces(p)" *ngFor="let p of s.projections._embedded.projections" class="list-group-item">
+=======
+                            <li [ngClass]="p==currentProjection?'active':''" (click)="onGetTicketsPlaces(p)" *ngFor="let p of s.projections._embedded.projections" class="list-group-item clickable">
+>>>>>>> payerTickets
                               {{p.seance.heureDebut}} => Prix : {{p.prix|number:'0.00'}} DH
                             </li>
                           </ul>
                         </div>
                     </div>
                     <div *ngIf="currentProjection">
+<<<<<<< HEAD
                       <div class="row" *ngIf="currentProjection.tickets">
 
                         <button class="btn btn-success ticket" *ngFor="let t of currentProjection.tickets._embedded.tickets">
                           {{t.place.numero}}
                         </button>
                       </div>
+=======
+                      <div *ngIf="s.id==currentProjection.salle.id">
+                      <div class="row" *ngIf="currentProjection.tickets">
+                        <button [disabled]="t.reservee==true" (click)="onSelectedTicket(t)" class="{{getTicketsClass(t)}}" *ngFor="let t of currentProjection.tickets._embedded.tickets">
+                          {{t.place.numero}}
+                        </button>
+                      </div>
+                      </div>
+
+                      <div *ngIf="selectedTickets.length>0">
+                        <form #f="ngForm"  (ngSubmit)="onPayTickets(f.value)">
+                          <div class="form-group">
+                            <label class="control-label" >Nom Client</label>
+                            <input class="form-control" type="text" name="nomClient">
+                          </div>
+                          <div class="form-group">
+                            <label class="control-label" >Code Payement</label>
+                            <input class="form-control" type="text" name="codePayement">
+                          </div>
+                          <button class="btn btn-success" type="submit">Payer</button>
+                        </form>
+                      </div>
+
+>>>>>>> payerTickets
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
